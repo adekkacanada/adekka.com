@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adekka | Automation you can hold accountable</title>
+<meta name="description" content="Adekka develops foundational infrastructure for consequential decisions and operations. Its flagship platform, NUBAS, is being developed to authorize actions before execution and create evidence designed for independent verification afterward.">
+<link rel="icon" type="image/svg+xml" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="%2339594D"/><rect x="14" y="13" width="36" height="15" rx="4" fill="%23FAF6F0"/><rect x="14" y="36" width="36" height="15" rx="4" fill="%23A9C1B4"/><rect x="30" y="28" width="4" height="8" fill="%23A9C1B4"/></svg>'>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@1,6..72,400;1,6..72,500&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --noise:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+  /* cohere-warm palette */
+  --cream:#FAF6F0; --cream2:#F3EDE3; --sand:#E9E0D1; --ink:#212121; --grey:#5E5C58;
+  --pine:#39594D; --pine-deep:#26413A; --sage:#A9C1B4; --sage-soft:#DCE7E0;
+  --coral:#E8A091; --sky:#A9BFD9; --butter:#E7C982;
+  --sans:'Instrument Sans',system-ui,sans-serif; --mono:'Geist Mono',ui-monospace,monospace;
+  --r:16px; --r-lg:24px;
+  --shadow:0 1px 1px rgba(33,33,33,.05),0 2px 6px rgba(33,33,33,.04),0 12px 28px rgba(33,33,33,.06);
+  --shadow-hover:0 1px 2px rgba(33,33,33,.06),0 6px 14px rgba(33,33,33,.06),0 24px 48px rgba(33,33,33,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:target,section[id]{scroll-margin-top:84px}
+a:focus-visible,.pill:focus-visible{outline:2px solid var(--pine);outline-offset:3px;border-radius:6px}
+body::before{content:"";position:fixed;inset:0;background-image:var(--noise);opacity:.026;pointer-events:none;z-index:1000;mix-blend-mode:multiply}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--pine);color:#fff}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4,h5{font-weight:600;letter-spacing:-.02em}
+.h-hero{font-size:clamp(48px,7vw,92px);line-height:.98;letter-spacing:-.038em}
+.h-lg{font-size:clamp(28px,3.6vw,44px);line-height:1.12}
+.h-md{font-size:clamp(22px,2.4vw,28px);line-height:1.25}
+.sub{font-size:clamp(17px,1.5vw,20px);color:var(--grey);line-height:1.55}
+.small{font-size:14.5px;color:var(--grey);line-height:1.6}
+.label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey)}
+.pill{display:inline-flex;align-items:center;gap:8px;font-weight:500;font-size:15.5px;padding:14px 28px;border-radius:100px;transition:all .18s;border:1.5px solid transparent;cursor:pointer;position:relative}
+.pill::after{content:"→";display:inline-block;transition:transform .18s;margin-left:2px}
+.pill:hover::after{transform:translateX(4px)}
+.pill.dark{background:var(--ink);color:#fff}
+.pill.dark:hover{background:var(--pine)}
+.pill.line{border-color:var(--ink)}
+.pill.line:hover{background:var(--ink);color:#fff}
+.pill.pine{background:var(--pine);color:#fff}
+.pill.pine:hover{background:var(--pine-deep)}
+.tlink{font-weight:500;font-size:15px;display:inline-flex;align-items:center;gap:6px;border-bottom:1.5px solid var(--sand)}
+.tlink:hover{border-color:var(--ink)}
+.tlink::after{content:"→";transition:transform .15s}
+.tlink:hover::after{transform:translateX(3px)}
+
+/* nav */
+nav{position:sticky;top:0;z-index:100;background:color-mix(in srgb,var(--cream) 90%,transparent);backdrop-filter:blur(16px);transition:box-shadow .25s;border-bottom:1px solid transparent}
+nav.elev{border-bottom-color:var(--sand);box-shadow:0 4px 24px rgba(33,33,33,.05)}
+.navin{display:flex;align-items:center;height:72px;gap:38px}
+.logo{font-weight:700;font-size:21px;letter-spacing:-.035em}
+.logo::after{content:".";color:var(--pine)}
+.navlinks{display:flex;gap:32px;margin-left:auto;align-items:center}
+.navlinks>a{font-size:15px;color:var(--ink);font-weight:500;opacity:.75}
+.navlinks>a:hover{opacity:1}
+.navlinks .pill{padding:10px 22px;font-size:14.5px}
+@media(max-width:900px){.navlinks>a:not(.pill){display:none}}
+
+/* ===== HERO (cohere: short line + art bg) ===== */
+.hero{position:relative;padding:110px 0 90px;overflow:hidden}
+.heroart{position:absolute;inset:0;pointer-events:none}
+.heroart .blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55}
+.b1{width:560px;height:560px;right:-140px;top:-160px;background:var(--sage)}
+.b2{width:420px;height:420px;right:180px;top:120px;background:var(--butter);opacity:.35}
+.b3{width:380px;height:380px;right:-60px;top:260px;background:var(--coral);opacity:.3}
+.hero .wrap{position:relative}
+.hero h1{max-width:9em}
+.hero .sub{max-width:26em;margin:28px 0 38px}
+.ctarow{display:flex;gap:14px;flex-wrap:wrap}
+
+/* ===== MARQUEE (cohere logo wall → protocol facts) ===== */
+.marq{border-top:1px solid var(--sand);border-bottom:1px solid var(--sand);padding:22px 0;overflow:hidden;background:var(--cream)}
+.marq .lbl{text-align:center;margin-bottom:16px}
+.track{display:flex;gap:56px;width:max-content;animation:scroll 36s linear infinite}
+.marq:hover .track{animation-play-state:paused}
+.track span{font-family:var(--mono);font-size:13px;color:var(--grey);white-space:nowrap;letter-spacing:.03em}
+.track span b{color:var(--pine);font-weight:500}
+@keyframes scroll{to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){.track{animation:none}}
+
+/* ===== PILLARS (Safe. Flexible. Independent.) ===== */
+.pillars{padding:110px 0}
+.pillars h2{text-align:center;margin-bottom:64px}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:44px}
+@media(max-width:880px){.pgrid{grid-template-columns:1fr}}
+.pl{text-align:center}
+.pl .ic{width:88px;height:88px;margin:0 auto 24px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.pl .ic svg{width:38px;height:38px;stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.pl h3{font-size:21px;margin-bottom:12px}
+.pl p{font-size:15px;color:var(--grey);max-width:22em;margin:0 auto 18px}
+
+/* ===== FEATURED BAND (North analog) ===== */
+.feat{padding:20px 0 110px}
+.featband{background:linear-gradient(150deg,var(--pine),var(--pine-deep));border-radius:var(--r-lg);padding:80px 72px 0;color:#fff;overflow:hidden;position:relative}
+@media(max-width:900px){.featband{padding:48px 28px 0}}
+.featband::before{content:"";position:absolute;width:640px;height:640px;border-radius:50%;background:radial-gradient(circle,rgba(169,193,180,.25),transparent 65%);top:-260px;right:-160px}
+.featgrid{display:grid;grid-template-columns:1fr 1.15fr;gap:56px;align-items:end;position:relative}
+@media(max-width:980px){.featgrid{grid-template-columns:1fr}}
+.featband h2{color:#fff;max-width:12em}
+.featband .sub{color:#C9D8D0;margin:18px 0 30px;max-width:26em}
+.featband .pill{background:#fff;color:var(--ink);margin-bottom:64px}
+.featband .pill:hover{background:var(--ink);color:#fff}
+/* console (screenshot analog) */
+.console{background:#131A17;border-radius:16px 16px 0 0;border:1px solid #2B3B34;border-bottom:none;box-shadow:0 -10px 60px rgba(0,0,0,.3);overflow:hidden}
+.chrome{display:flex;align-items:center;gap:8px;padding:13px 18px;background:#1A2420;border-bottom:1px solid #2B3B34}
+.dot{width:10px;height:10px;border-radius:50%;background:#33443C}
+.chrome .t{margin-left:10px;font-family:var(--mono);font-size:11px;color:#7E9188}
+.chrome .live{margin-left:auto;font-family:var(--mono);font-size:10px;color:#8FD4AF;display:flex;align-items:center;gap:6px}
+.chrome .live::before{content:"";width:6px;height:6px;border-radius:50%;background:#8FD4AF;animation:pulse 1.6s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.chead{display:grid;grid-template-columns:80px 1fr 116px 92px;gap:10px;padding:9px 18px;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#5F7168;border-bottom:1px solid #22302A}
+.cstream{height:296px;overflow:hidden;padding:4px 0}
+.crow{display:grid;grid-template-columns:80px 1fr 116px 92px;gap:10px;padding:8px 18px;font-family:var(--mono);font-size:11.5px;color:#C2CFC8;align-items:center;opacity:0;transform:translateY(-6px);animation:rowin .4s forwards}
+@keyframes rowin{to{opacity:1;transform:none}}
+.crow .id{color:#5F7168;font-size:10.5px}
+.crow .op{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crow .op i{font-style:normal;color:#7E9188}
+.vc{font-size:10px;letter-spacing:.05em;padding:3px 9px;border-radius:100px;text-align:center;font-weight:500}
+.vc.allow{background:rgba(143,212,175,.15);color:#8FD4AF}
+.vc.constr{background:rgba(169,191,217,.16);color:#A9BFD9}
+.vc.deny{background:rgba(232,160,145,.16);color:#E8A091}
+.vc.esc{background:rgba(231,201,130,.18);color:#E7C982}
+.vc.hold{background:rgba(190,180,220,.16);color:#BEB4DC}
+.pr{font-size:10px;color:#5F7168;display:flex;align-items:center;gap:5px}
+.pr b{color:#8FD4AF;font-weight:500}
+.pr .lk{color:#33443C}
+.pr b.pend{color:#5F7168;animation:pulse 1.2s infinite}
+.capt{font-family:var(--mono);font-size:10.5px;color:#7E9188;padding:12px 0 26px;letter-spacing:.05em}
+@media(max-width:980px){.capt{padding-bottom:34px}}
+
+/* ===== INDUSTRIES (photo tiles → gradient art tiles) ===== */
+.inds{padding:110px 0}
+.igrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:52px}
+@media(max-width:900px){.igrid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){.probgrid{grid-template-columns:1fr!important}.probgrid>div{border-radius:var(--r)!important}}
+@media(max-width:860px){.pgrid[style*="repeat(2"]{grid-template-columns:1fr!important}}
+@media(max-width:600px){.igrid{grid-template-columns:1fr}}
+.itile{border-radius:var(--r);overflow:hidden;background:#fff;box-shadow:var(--shadow);transition:transform .25s,box-shadow .25s}
+.itile:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover)}
+.itile .iart{transition:transform .5s cubic-bezier(.2,.6,.2,1)}
+.itile:hover .iart{transform:scale(1.045)}
+.iart{height:150px;position:relative}
+.iart::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 1.2px 1.2px,rgba(255,255,255,.35) 1px,transparent 0);background-size:18px 18px;mix-blend-mode:overlay}
+.a-agents{background:radial-gradient(120% 160% at 15% 0%,#4A6E5E,var(--pine) 55%,#22382F)}
+.a-def{background:radial-gradient(120% 160% at 80% 0%,#5A7186,#3A4A5C 55%,#232D38)}
+.a-fin{background:linear-gradient(135deg,#8A6B3B,var(--butter))}
+.a-health{background:linear-gradient(135deg,#9C5E52,var(--coral))}
+.a-infra{background:linear-gradient(135deg,#4C4458,#B4A9CD)}
+.a-pub{background:radial-gradient(120% 160% at 20% 0%,#78894F,#57683F 55%,#333F23)}
+.itile .ib{padding:20px 22px}
+.itile h3{font-size:17px}
+.itile p{font-size:13.5px;color:var(--grey);margin-top:6px}
+
+/* ===== PRODUCTS LIST (Our models. Your business.) ===== */
+.prods{padding:110px 0;background:var(--cream2);border-radius:var(--r-lg)}
+.pwrap{display:grid;grid-template-columns:1fr 1.1fr;gap:72px;align-items:start}
+@media(max-width:980px){.pwrap{grid-template-columns:1fr;gap:40px}}
+.pvis{position:sticky;top:110px}
+@media(max-width:980px){.pvis{position:static}}
+.panel{background:#fff;border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
+.phead{padding:11px 18px;border-bottom:1px solid var(--cream2);font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--grey);display:flex;justify-content:space-between}
+.pbody{padding:20px}
+.chain{display:flex;flex-direction:column;font-family:var(--mono);font-size:11.5px}
+.blk{border:1px solid var(--sand);border-radius:10px;padding:11px 15px;background:var(--cream);display:flex;justify-content:space-between;gap:10px;color:var(--grey)}
+.blk b{color:var(--ink);font-weight:500}
+.blk .h{color:#A39F97;font-size:10px}
+.chainlink{width:1.5px;height:16px;background:var(--pine);margin-left:26px;position:relative}
+.chainlink::after{content:"sha-256";position:absolute;left:10px;top:1px;font-size:9px;color:var(--pine);font-family:var(--mono)}
+.plist{display:flex;flex-direction:column}
+.pitem{border-top:1px solid var(--sand);padding:30px 0}
+.pitem:last-child{border-bottom:1px solid var(--sand)}
+.pitem h4{font-size:20px;display:flex;align-items:center;gap:12px}
+.pitem .tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);border:1px solid var(--sand);border-radius:100px;padding:3px 10px}
+.pitem .tag.rd{color:var(--pine);border-color:var(--sage)}
+.pitem .one{font-size:15px;color:var(--grey);margin:8px 0 12px}
+.pitem ul{list-style:none}
+.pitem li{font-size:14.5px;color:var(--grey);padding:5px 0 5px 24px;position:relative}
+.pitem li::before{content:"";position:absolute;left:2px;top:13px;width:11px;height:1.5px;background:var(--pine)}
+.pitem li b{color:var(--ink);font-weight:500}
+
+/* ===== DEV BAND ===== */
+.dev{padding:110px 0}
+.devband{background:#fff;border-radius:var(--r-lg);box-shadow:var(--shadow);padding:72px;display:grid;grid-template-columns:1fr 1.05fr;gap:64px;align-items:center}
+@media(max-width:940px){.devband{grid-template-columns:1fr;padding:40px 28px}}
+.code{background:#131A17;border-radius:14px;overflow:hidden;font-family:var(--mono);font-size:12px;line-height:1.75}
+.code .chead2{padding:11px 18px;border-bottom:1px solid #22302A;color:#5F7168;font-size:10.5px;display:flex;justify-content:space-between}
+.code pre{padding:18px 20px;overflow-x:auto;color:#C2CFC8}
+.code .p{color:#A9BFD9}.code .s{color:#8FD4AF}.code .n{color:#E7C982}.code .c{color:#5F7168}
+
+/* ===== QUOTE (testimonial analog) ===== */
+.qsec{padding:20px 0 110px}
+.qband{background:var(--sage-soft);border-radius:var(--r-lg);padding:84px 64px;display:grid;grid-template-columns:auto 1fr;gap:56px;align-items:center}
+@media(max-width:840px){.qband{grid-template-columns:1fr;padding:48px 28px}}
+.qmark{width:96px;height:96px;border-radius:50%;background:var(--pine);display:flex;align-items:center;justify-content:center;color:var(--sage-soft);font-size:52px;font-family:Georgia,serif;line-height:1}
+.qband p{font-family:'Newsreader',Georgia,serif;font-style:italic;font-size:clamp(23px,2.9vw,34px);line-height:1.4;font-weight:400;letter-spacing:-.01em;max-width:23em}
+.qband p em{color:var(--pine);font-style:normal}
+.qband .label{margin-top:20px;display:block}
+
+/* ===== CTA ===== */
+.ctasec{padding:0 0 110px}
+.cta{position:relative;background:var(--ink);color:#fff;border-radius:var(--r-lg);padding:96px 64px;text-align:center;overflow:hidden}
+.cta .cb{position:absolute;border-radius:50%;filter:blur(60px);opacity:.4}
+.cb1{width:400px;height:400px;background:var(--pine);left:-120px;bottom:-180px}
+.cb2{width:360px;height:360px;background:var(--sky);right:-100px;top:-160px;opacity:.25}
+@media(max-width:700px){.cta{padding:60px 28px}}
+.cta h2{color:#fff;max-width:14em;margin:0 auto 16px;position:relative}
+.cta p{color:#B9BDB6;max-width:33em;margin:0 auto 36px;font-size:17px;position:relative}
+.cta .pill{background:#fff;color:var(--ink);position:relative}
+.cta .pill:hover{background:var(--pine);color:#fff}
+
+/* ===== MEGA FOOTER ===== */
+footer{border-top:1px solid var(--sand);padding:72px 0 60px;background:var(--cream)}
+.fgrid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px}
+@media(max-width:880px){.fgrid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.fgrid{grid-template-columns:1fr}}
+.fcol h5{font-size:13.5px;margin-bottom:16px}
+.fcol a{display:block;font-size:14px;color:var(--grey);padding:5px 0}
+.fcol a{width:fit-content;background:linear-gradient(currentColor,currentColor) bottom left/0 1px no-repeat;transition:background-size .25s,color .15s}
+.fcol a:hover{color:var(--ink);background-size:100% 1px}
+.fbase{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:56px;padding-top:28px;border-top:1px solid var(--sand);font-size:13.5px;color:var(--grey)}
+
+.rv{opacity:0;transform:translateY(14px);transition:opacity .65s cubic-bezier(.2,.6,.2,1),transform .65s cubic-bezier(.2,.6,.2,1)}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.crow{animation:none;opacity:1}}
+</style>
+</head>
+<body>
+
+<nav id="nav"><div class="wrap navin">
+  <a class="logo" href="#top">adekka</a>
+  <div class="navlinks">
+    <a href="#platform">Platform</a>
+    <a href="#protocol">Protocol</a>
+    <a href="#industries">Applications</a>
+    <a href="#company">Company</a>
+    <a href="https://github.com/adekka-canada/actionspecs">GitHub</a>
+    <a class="pill dark" href="mailto:info@adekka.com">Contact us</a>
+  </div>
+</div></nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="heroart"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+  <div class="wrap">
+    <h1 class="h-hero rv">Automation you can<br>hold accountable.</h1>
+    <p class="sub rv" style="max-width:33em">Adekka develops foundational infrastructure for consequential decisions and operations. Its flagship platform, NUBAS, is being developed for trusted autonomous systems. It sits between automated workloads and consequential operations, authorizing actions before execution and creating evidence designed for independent verification afterward.</p>
+    <div class="ctarow rv">
+      <a class="pill dark" href="#platform">Explore NUBAS</a>
+      <a class="pill line" href="https://github.com/adekka-canada/actionspecs">Read ActionSpecs</a>
+    </div>
+  </div>
+</header>
+
+<!-- MARQUEE -->
+<div class="marq">
+  <div class="track" aria-hidden="true">
+    <span><b>ActionSpecs</b> public protocol draft</span><span><b>six</b> defined verdict types</span><span><b>PROA ⇄ PROOD</b> paired evidence</span><span>deterministic <b>policy architecture</b></span><span>append-only <b>evidence design</b></span><span>governed <b>override</b></span><span><b>domain-neutral</b> core</span><span>edge &amp; <b>sovereign deployment</b> architecture</span>
+    <span><b>ActionSpecs</b> public protocol draft</span><span><b>six</b> defined verdict types</span><span><b>PROA ⇄ PROOD</b> paired evidence</span><span>deterministic <b>policy architecture</b></span><span>append-only <b>evidence design</b></span><span>governed <b>override</b></span><span><b>domain-neutral</b> core</span><span>edge &amp; <b>sovereign deployment</b> architecture</span>
+  </div>
+</div>
+
+
+
+<!-- THE PROBLEM -->
+<section style="padding:96px 0 0"><div class="wrap">
+  <span class="label rv">The problem</span>
+  <h2 class="h-lg rv" style="margin-top:14px;max-width:17em">Authorization systems answer "may this occur?" What happens next is usually recorded somewhere else.</h2>
+  <p class="sub rv" style="max-width:39em;margin-top:16px">Automated systems now move money, transform sensitive data, communicate externally, and actuate physical infrastructure. Existing controls may authorize the action and log the execution, but those records are often produced by separate systems and are not bound into one independently verifiable chain.</p>
+  <div class="rv probgrid" style="display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:stretch;margin-top:48px">
+    <div style="background:#fff;border-radius:var(--r) 0 0 var(--r);box-shadow:var(--shadow);padding:30px 28px">
+      <div class="label" style="margin-bottom:12px;color:var(--pine)">What was authorized</div>
+      <p style="font-size:14.5px;color:var(--grey)">A permission granted at a point in time against a particular policy state, often recorded separately from the system that later executes the operation.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--ink);color:#fff;padding:18px 22px;min-width:150px;text-align:center">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:#B9BDB6">THE GAP</div>
+      <div style="font-weight:600;font-size:14px;margin-top:6px;line-height:1.3">where failures live</div>
+    </div>
+    <div style="background:#fff;border-radius:0 var(--r) var(--r) 0;box-shadow:var(--shadow);padding:30px 28px">
+      <div class="label" style="margin-bottom:12px;color:#9C5E52">What actually occurred</div>
+      <p style="font-size:14.5px;color:var(--grey)">The operation that ran, including its recorded inputs, transformations, outputs, and delivery result. Reconciling the two conclusively is often difficult.</p>
+    </div>
+  </div>
+  <p class="small rv" style="margin-top:20px;max-width:42em">NUBAS is being developed to close this gap structurally by binding each governed authorization to recorded evidence of the operation that followed.</p>
+</div></section>
+
+<!-- HOW IT WORKS -->
+<section style="padding:96px 0 10px"><div class="wrap">
+  <span class="label rv">How it works</span>
+  <h2 class="h-lg rv" style="margin-top:14px;max-width:15em">Three steps. Every governed operation.</h2>
+  <div class="pgrid" style="margin-top:56px;gap:20px">
+    <div class="rv" style="background:#fff;border-radius:var(--r);padding:32px 30px;box-shadow:var(--shadow)">
+      <div style="font-family:var(--mono);font-size:13px;color:var(--pine);margin-bottom:14px">01</div>
+      <h3 style="font-size:19px;margin-bottom:10px">An action is declared</h3>
+      <p style="font-size:14.5px;color:var(--grey)">Before an automated system does anything consequential (move money, merge data, send a message, actuate a machine), the action is written down in a machine-readable form: who wants to do what, with which inputs, producing what.</p>
+    </div>
+    <div class="rv" style="background:#fff;border-radius:var(--r);padding:32px 30px;box-shadow:var(--shadow)">
+      <div style="font-family:var(--mono);font-size:13px;color:var(--pine);margin-bottom:14px">02</div>
+      <h3 style="font-size:19px;margin-bottom:10px">Your rules decide</h3>
+      <p style="font-size:14.5px;color:var(--grey)">NUBAS checks the proposed action against signed, versioned policy and issues one of six deterministic verdicts: allow, allow with constraints, hold, escalate, deny, or emergency restrict. The governed execution path does not proceed without a verdict.</p>
+    </div>
+    <div class="rv" style="background:#fff;border-radius:var(--r);padding:32px 30px;box-shadow:var(--shadow)">
+      <div style="font-family:var(--mono);font-size:13px;color:var(--pine);margin-bottom:14px">03</div>
+      <h3 style="font-size:19px;margin-bottom:10px">Proof is created</h3>
+      <p style="font-size:14.5px;color:var(--grey)">Two linked records are written into a tamper-evident ledger: one recording what was authorized and one recording the operation and its delivery outcome. The evidence-bundle design is intended to support independent verification by auditors, regulators, investigators, and other authorized reviewers without requiring access to the live operating system.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- PILLARS -->
+<section class="pillars"><div class="wrap">
+  <h2 class="h-lg rv">What that gives you</h2>
+  <div class="pgrid">
+    <div class="pl rv">
+      <div class="ic" style="background:var(--sage-soft)"><svg viewBox="0 0 24 24" stroke="var(--pine)"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M9 12l2 2 4-4.5"/></svg></div>
+      <h3>Authorization</h3>
+      <p>Wrong actions can be stopped before execution rather than detected afterward. Decisions are deterministic, and every verdict includes a rationale a human can inspect.</p>
+      <a class="tlink" href="#platform">Learn more</a>
+    </div>
+    <div class="pl rv">
+      <div class="ic" style="background:#F4E8D8"><svg viewBox="0 0 24 24" stroke="#8A6B3B"><path d="M7 3h10a1 1 0 0 1 1 1v16l-3-1.6L12 20l-3-1.6L6 20V4a1 1 0 0 1 1-1z"/><path d="M9.5 8h5M9.5 12h5"/></svg></div>
+      <h3>Evidence</h3>
+      <p>You can demonstrate what your systems were authorized to do and what occurred afterward. The evidence architecture is designed to support independent verification without relying solely on the operator or requiring access to the live system.</p>
+      <a class="tlink" href="#platform">Learn more</a>
+    </div>
+    <div class="pl rv">
+      <div class="ic" style="background:#F2E2DE"><svg viewBox="0 0 24 24" stroke="#9C5E52"><path d="M4 10a8 8 0 1 1 2.3 6.3"/><path d="M4 16v-6h6"/></svg></div>
+      <h3>Accountability</h3>
+      <p>When incidents occur, lineage identifies the affected operations, actors, inputs, and outputs. Structured recall and provable remediation are part of the product roadmap.</p>
+      <a class="tlink" href="#platform">Learn more</a>
+    </div>
+  </div>
+</div></section>
+
+<!-- FEATURED BAND -->
+<section class="feat"><div class="wrap">
+  <div class="featband rv">
+    <div class="featgrid">
+      <div>
+        <span class="label" style="color:#9DB8AB">NUBAS Platform</span>
+        <h2 class="h-lg" style="margin-top:14px">One platform for governing consequential actions.</h2>
+        <p class="sub">Your automated systems run on top of NUBAS rather than governing themselves. The architecture is designed so automated workloads receive post-enforcement data and generate recorded operational evidence. In a conforming governed execution path, the workload must not bypass authorization or alter the evidentiary record.</p>
+        <a class="pill" href="#platform">Explore NUBAS</a>
+      </div>
+      <div>
+        <div class="console">
+          <div class="chrome"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="t">nubas · verdict stream</span><span class="live">SYNTHETIC</span></div>
+          <div class="chead"><span>action</span><span>operation</span><span>verdict</span><span>proofs</span></div>
+          <div class="cstream" id="stream"></div>
+        </div>
+        <div class="capt">Product interface: in development · synthetic stream</div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- INDUSTRIES -->
+<section class="inds" id="industries"><div class="wrap">
+  <h2 class="h-lg rv" style="max-width:18em">Built for anywhere a wrong action is unaffordable</h2>
+  <div class="igrid">
+    <a class="itile rv" href="mailto:info@adekka.com?subject=AI%20agents"><div class="iart a-agents"><svg viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;display:block">
+  <g stroke="rgba(250,246,240,.5)" stroke-width="1.2" fill="none">
+    <path d="M40,110 L120,75 L200,95 L120,75 L110,30 M200,95 L290,55 L360,80 M290,55 L300,20 M200,95 L230,130"/>
+  </g>
+  <g fill="rgba(250,246,240,.85)">
+    <circle cx="40" cy="110" r="5"/><circle cx="110" cy="30" r="5"/><circle cx="300" cy="20" r="5"/><circle cx="360" cy="80" r="5"/><circle cx="230" cy="130" r="5"/>
+  </g>
+  <g fill="none" stroke="rgba(250,246,240,.9)" stroke-width="1.6">
+    <circle cx="120" cy="75" r="9"/><circle cx="290" cy="55" r="9"/>
+  </g>
+  <rect x="186" y="81" width="28" height="28" rx="7" fill="rgba(250,246,240,.95)"/>
+  <path d="M193,95 l5,5 9,-10" stroke="#39594D" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg></div><div class="ib"><h3>AI agents &amp; enterprise automation</h3><p>Tool calls, transactions, communications, and system changes governed against explicit policy.</p></div></a>
+    <a class="itile rv" href="mailto:info@adekka.com?subject=Defence"><div class="iart a-def"><svg viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;display:block">
+  <g stroke="rgba(250,246,240,.4)" stroke-width="1.1" fill="none">
+    <path d="M-20,150 A210,210 0 0 1 400,120"/>
+    <path d="M20,150 A170,170 0 0 1 380,140"/>
+    <circle cx="200" cy="160" r="70"/><circle cx="200" cy="160" r="110"/><circle cx="200" cy="160" r="150"/>
+  </g>
+  <g stroke="rgba(250,246,240,.65)" stroke-width="1.3" fill="none">
+    <path d="M200,160 L330,35"/><path d="M200,160 L90,45"/>
+  </g>
+  <path d="M200,160 L305,28 A175,175 0 0 1 345,60 Z" fill="rgba(250,246,240,.14)"/>
+  <g fill="rgba(250,246,240,.9)">
+    <circle cx="140" cy="70" r="4"/><circle cx="255" cy="52" r="4"/><circle cx="310" cy="95" r="4"/><circle cx="85" cy="115" r="4"/>
+  </g>
+  <g fill="none" stroke="rgba(250,246,240,.9)" stroke-width="1.4">
+    <circle cx="255" cy="52" r="9"/>
+  </g>
+</svg></div><div class="ib"><h3>Defence &amp; national security</h3><p>Multi-sensor and multi-domain operations under strict authority, classification, and releasability controls.</p></div></a>
+    <a class="itile rv" href="mailto:info@adekka.com?subject=Government"><div class="iart a-pub"><svg viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;display:block">
+  <g stroke="rgba(250,246,240,.35)" stroke-width="1">
+    <path d="M0,38 H400 M0,76 H400 M0,114 H400 M57,0 V150 M114,0 V150 M171,0 V150 M228,0 V150 M285,0 V150 M342,0 V150"/>
+  </g>
+  <g stroke="rgba(250,246,240,.85)" stroke-width="1.6" fill="none" stroke-linecap="round">
+    <path d="M135,114 V64 M155,114 V50 M175,114 V64 M195,114 V50 M215,114 V64"/>
+    <path d="M120,114 H230 M118,64 L175,30 L232,64"/>
+  </g>
+  <g fill="rgba(250,246,240,.9)">
+    <circle cx="285" cy="38" r="4"/><circle cx="342" cy="76" r="4"/><circle cx="57" cy="76" r="4"/><circle cx="114" cy="38" r="4"/>
+  </g>
+  <path d="M57,76 L114,38 M285,38 L342,76" stroke="rgba(250,246,240,.6)" stroke-width="1.2"/>
+</svg></div><div class="ib"><h3>Government &amp; critical infrastructure</h3><p>Accountable automation in sovereign, regulated, and essential operating environments.</p></div></a>
+  </div>
+  <p class="small rv" style="margin-top:22px;max-width:44em">Additional ActionSpecs application profiles may extend the architecture into other regulated domains.</p>
+</div></section>
+
+<!-- PRODUCTS LIST -->
+<section id="platform" style="padding:0 24px"><div class="wrap prods"><div class="wrap" style="padding:0 40px">
+  <h2 class="h-lg rv" style="max-width:14em">Our platform. Your rules.</h2>
+  <p class="small rv" style="margin-top:14px;max-width:44em">NUBAS is in active development. The capabilities below describe the intended platform architecture derived from the public ActionSpecs protocol draft. Items marked Roadmap are planned for future versions and should not be interpreted as currently deployed functionality.</p>
+  <div class="pwrap" style="margin-top:52px">
+    <div class="pvis rv">
+      <div class="panel">
+        <div class="phead"><span>ledger · receipt chain</span><span>append-only</span></div>
+        <div class="pbody chain">
+          <div class="blk"><span><b>PROA</b> 01J9ZK…HD3M</span><span class="h">what was authorized</span></div>
+          <div class="chainlink"></div>
+          <div class="blk"><span><b>PROOD</b> 01J9ZK…HD3M</span><span class="h">what occurred</span></div>
+          <div class="chainlink"></div>
+          <div class="blk" style="border-style:dashed"><span><b>export</b> evidence-bundle.tar</span><span class="h" style="color:var(--pine)">offline verification design</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="plist">
+      <div class="pitem rv">
+        <h4>Verdict Engine <span class="tag">Enforcement</span></h4>
+        <p class="one">Deterministic policy decisions designed for machine-speed execution</p>
+        <ul>
+          <li><b>Six verdict types</b> mapped to any domain's dispositions</li>
+          <li><b>Deterministic:</b> same input, same answer, fired clause cited; no probabilistic model in the path</li>
+          <li><b>Deployment architecture</b> designed to support local and resource-constrained environments</li>
+        </ul>
+      </div>
+      <div class="pitem rv">
+        <h4>Evidence Ledger <span class="tag">Proof</span></h4>
+        <p class="one">Paired proofs of authorization and outcome, per operation</p>
+        <ul>
+          <li><b>PROA ⇄ PROOD</b> cryptographically linked in an append-only, hash-chained ledger</li>
+          <li><b>Lineage query design:</b> intended to trace governed outputs through their recorded operation chain</li>
+          <li><b>Self-verifying export design:</b> evidence bundles intended to support independent validation without access to the live system</li>
+        </ul>
+      </div>
+      <div class="pitem rv">
+        <h4>Policy Control <span class="tag">Governance</span></h4>
+        <p class="one">Rules as signed, versioned code, with controlled activation and governed change</p>
+        <ul>
+          <li><b>Versioned policy activation</b> designed to avoid enforcement discontinuity</li>
+          <li><b>Governance of the governor:</b> rule changes are themselves verdicted and receipted</li>
+          <li><b>Governed override:</b> attributed to an authorized actor and recorded as part of the evidence chain</li>
+        </ul>
+      </div>
+      <div class="pitem rv">
+        <h4>Recall &amp; Remediation <span class="tag rd">Roadmap</span></h4>
+        <p class="one">When something goes wrong, prove the cleanup</p>
+        <ul>
+          <li><b>Blast radius as a query:</b> forward lineage is intended to identify affected downstream operations represented in the governed record</li>
+          <li><b>Compensating actions:</b> every remediation step authorized and receipted</li>
+          <li><b>Honest reversibility:</b> each operation classed as undone, contained, or irreversible, and provably so</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div></div></section>
+
+
+<!-- DEPLOYMENT -->
+<section style="padding:0 0 110px"><div class="wrap">
+  <span class="label rv">Deployment architecture</span>
+  <h2 class="h-lg rv" style="margin-top:14px;max-width:16em">Deploy where the action happens.</h2>
+  <p class="sub rv" style="max-width:40em;margin-top:16px">NUBAS places the verdict and evidence path inside the environment where consequential operations occur. It supports a local single-node runtime for development and evaluation, then deploys across managed, customer-controlled cloud, sovereign on-premises, and edge environments. Policy authority, enforcement boundaries, key custody, and evidence custody are configured according to each deployment model.</p>
+  <div class="pgrid rv" style="margin-top:48px;gap:18px;grid-template-columns:repeat(2,1fr)">
+    <div style="background:#fff;border-radius:var(--r);box-shadow:var(--shadow);padding:30px 28px">
+      <div class="label" style="color:var(--pine);margin-bottom:12px">Managed deployment</div>
+      <h3 style="font-size:18px;margin-bottom:8px">Managed for enterprise</h3>
+      <p style="font-size:14px;color:var(--grey)">Managed NUBAS infrastructure for enterprise applications and agent workloads, with defined tenancy, policy, and evidence controls.</p>
+    </div>
+    <div style="background:#fff;border-radius:var(--r);box-shadow:var(--shadow);padding:30px 28px">
+      <div class="label" style="color:var(--pine);margin-bottom:12px">Customer-controlled cloud</div>
+      <h3 style="font-size:18px;margin-bottom:8px">Your VPC, your boundaries</h3>
+      <p style="font-size:14px;color:var(--grey)">Deploy within your VPC or private cloud, with customer-defined network, data-residency, key-custody, and evidence-custody boundaries.</p>
+    </div>
+    <div style="background:#fff;border-radius:var(--r);box-shadow:var(--shadow);padding:30px 28px">
+      <div class="label" style="color:var(--pine);margin-bottom:12px">Sovereign on-premises</div>
+      <h3 style="font-size:18px;margin-bottom:8px">Inside your perimeter</h3>
+      <p style="font-size:14px;color:var(--grey)">Deploy within organization-owned infrastructure for regulated, restricted, and sovereign environments. Operational dependencies, policy authority, cryptographic keys, and evidence custody remain locally controlled. Evidence bundles support authorized review outside the operating environment without access to the live system.</p>
+    </div>
+    <div style="background:#fff;border-radius:var(--r);box-shadow:var(--shadow);padding:30px 28px">
+      <div class="label" style="color:var(--pine);margin-bottom:12px">Edge &amp; disconnected</div>
+      <h3 style="font-size:18px;margin-bottom:8px">Operate without continuous connectivity</h3>
+      <p style="font-size:14px;color:var(--grey)">Run local verdict evaluation, enforcement, and evidence capture close to the governed operation. Records synchronize through an authorized connection when connectivity becomes available.</p>
+    </div>
+    <div style="background:#fff;border-radius:var(--r);box-shadow:var(--shadow);padding:30px 28px;grid-column:1/-1">
+      <div class="label" style="color:var(--pine);margin-bottom:12px">Local development</div>
+      <h3 style="font-size:18px;margin-bottom:8px">Build and evaluate on one machine</h3>
+      <p style="font-size:14px;color:var(--grey);max-width:60em">Run the NUBAS verdict and evidence path as a single-node local runtime for development, integration, testing, and policy evaluation before deploying into managed, customer-controlled, sovereign, or edge environments. The local runtime follows the same ActionSpecs semantics and is the target environment for protocol conformance testing.</p>
+    </div>
+  </div>
+  <p class="small rv" style="margin-top:22px;max-width:46em">The same ActionSpecs verdict semantics, evidence requirements, and policy-governance model apply across deployment modes; local policies and application profiles can vary by environment. Deployment modes describe the NUBAS product architecture in development; validated operating envelopes will be published as implementations are tested.</p>
+</div></section>
+
+<!-- DEV BAND -->
+<section class="dev" id="protocol"><div class="wrap">
+  <div class="devband rv">
+    <div>
+      <span class="label">Public working draft</span>
+      <h2 class="h-lg" style="margin:14px 0 16px">Built from ActionSpecs. Open to examine and implement.</h2>
+      <p class="sub" style="margin-bottom:30px">The public working draft defines the intended lifecycle, verdict semantics, paired-evidence model, and conformance requirements. It is published under CC BY 4.0 for independent examination, implementation, and contribution.</p>
+      <div class="ctarow">
+        <a class="pill pine" href="spec.html">Read the working draft</a>
+        <a class="tlink" href="https://github.com/adekka-canada/actionspecs" style="align-self:center">View on GitHub</a>
+      </div>
+    </div>
+    <div class="code">
+      <div class="chead2"><span>actionspec.json</span><span>declared → verdicted → receipted</span></div>
+      <pre>{
+  <span class="p">"action_id"</span>: <span class="s">"01J9ZK3W7Q4R8V2N6P0XA5HD3M"</span>,
+  <span class="p">"principal"</span>: { <span class="p">"id"</span>: <span class="s">"agent-operations-7"</span> },
+  <span class="p">"operation"</span>: <span class="s">"data.release"</span>,
+  <span class="p">"inputs"</span>: [{ <span class="p">"ref"</span>: <span class="s">"dataset:4471"</span>, <span class="p">"digest"</span>: <span class="s">"sha256:…"</span> }],
+  <span class="p">"proposed_output"</span>: { <span class="p">"destination"</span>: <span class="s">"partner-enclave-2"</span> },
+  <span class="p">"policy_scope"</span>: [<span class="s">"information.releasability"</span>]
+}
+<span class="c">// verdict: allow-with-constraints (releasability rule R-114)</span>
+<span class="c">// constraints: redact restricted fields · bind output label</span>
+<span class="c">// PROA issued · PROOD issued after delivery</span></pre>
+    </div>
+  </div>
+</div></section>
+
+<!-- QUOTE -->
+<section class="qsec"><div class="wrap">
+  <div class="qband rv">
+    <div class="qmark">"</div>
+    <div>
+      <p>A consequential operation must not occur without a policy verdict, and no verdict or outcome may exist <em>without a receipt.</em></p>
+      <span class="label">The ActionSpecs invariant: the foundational rule NUBAS is built to enforce</span>
+    </div>
+  </div>
+</div></section>
+
+
+<!-- COMPANY -->
+<section id="company" style="padding:96px 0 110px"><div class="wrap">
+  <span class="label rv">The company</span>
+  <h2 class="h-lg rv" style="margin-top:14px;max-width:18em">Adekka is a research-driven AI infrastructure company.</h2>
+  <p class="sub rv" style="max-width:39em;margin-top:16px">Adekka develops foundational ideas into open protocols and deployable infrastructure. We formalize the architecture, publish the protocol so it can be independently examined and implemented, and build platforms that apply it in real operating environments. NUBAS is the first platform being built through this process.</p>
+  <div class="pgrid rv" style="margin-top:48px;gap:18px">
+    <div style="background:#fff;border-radius:var(--r);box-shadow:var(--shadow);padding:30px 28px">
+      <div class="label" style="color:var(--pine);margin-bottom:12px">Public working draft</div>
+      <h3 style="font-size:18px;margin-bottom:8px">ActionSpecs</h3>
+      <p style="font-size:14px;color:var(--grey)">Our foundational research output: a public protocol draft for authorizing and evidencing consequential automated operations, available for independent examination and implementation.</p>
+    </div>
+    <div style="background:#fff;border-radius:var(--r);box-shadow:var(--shadow);padding:30px 28px">
+      <div class="label" style="color:var(--pine);margin-bottom:12px">Flagship platform</div>
+      <h3 style="font-size:18px;margin-bottom:8px">NUBAS</h3>
+      <p style="font-size:14px;color:var(--grey)">Adekka's trusted-action platform, the reference platform being developed from ActionSpecs. A verdict before each governed action; an evidence architecture designed for independent verification afterward.</p>
+    </div>
+    <div style="background:#fff;border-radius:var(--r);box-shadow:var(--shadow);padding:30px 28px">
+      <div class="label" style="margin-bottom:12px">Continuing work</div>
+      <h3 style="font-size:18px;margin-bottom:8px">What comes next</h3>
+      <p style="font-size:14px;color:var(--grey)">Application profiles extending the protocol into new domains, future protocol versions, and further infrastructure for consequential decisions and operations.</p>
+    </div>
+  </div>
+  <p class="rv" style="margin-top:26px"><a class="tlink" href="position.html">Read our position: the hard questions about autonomous action</a></p>
+</div></section>
+
+<!-- CTA -->
+<section class="ctasec"><div class="wrap">
+  <div class="cta rv">
+    <div class="cb cb1"></div><div class="cb cb2"></div>
+    <h2 class="h-lg">Governing something that matters?</h2>
+    <p>We're selecting a small number of design partners deploying agents and automation where wrong actions have real cost. Partners get early access, direct influence on application profiles, and evidence-verification capabilities designed for independent review.</p>
+    <a class="pill" href="mailto:info@adekka.com?subject=Design%20partner%20inquiry">Talk to us</a>
+  </div>
+</div></section>
+
+<!-- MEGA FOOTER -->
+<footer><div class="wrap">
+  <div class="fgrid">
+    <div class="fcol">
+      <div class="logo" style="margin-bottom:16px">adekka</div>
+      <p class="small" style="max-width:30em">Adekka Canada Inc. is a Canadian AI and deep-tech company developing foundational infrastructure for consequential decisions and operations. Its current work includes NUBAS, a trusted-action platform in development, and ActionSpecs, a public protocol draft for authorizing and evidencing consequential automated operations. Based in Toronto.</p>
+    </div>
+    <div class="fcol">
+      <h5>Platform</h5>
+      <a href="#platform">Verdict Engine</a>
+      <a href="#platform">Evidence Ledger</a>
+      <a href="#platform">Policy Control</a>
+      <a href="#platform">Recall &amp; Remediation</a>
+    </div>
+    <div class="fcol">
+      <h5>Protocol</h5>
+      <a href="spec.html">Protocol draft</a>
+      <a href="https://github.com/adekka-canada/actionspecs/blob/main/CHANGELOG.md">Changelog</a>
+      <a href="https://github.com/adekka-canada">GitHub</a>
+    </div>
+    <div class="fcol">
+      <h5>Company</h5>
+      <a href="#industries">Applications</a>
+      <a href="position.html">Our position</a>
+      <a href="mailto:info@adekka.com">Contact</a>
+      <a href="mailto:info@adekka.com?subject=Design%20partner%20inquiry">Design partners</a>
+    </div>
+  </div>
+  <div class="fbase">
+    <span>© 2026 Adekka Canada Inc.</span>
+    <span>info@adekka.com</span>
+  </div>
+</div></footer>
+
+<script>
+const nv=document.getElementById('nav');
+addEventListener('scroll',()=>nv.classList.toggle('elev',scrollY>8),{passive:true});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+const ops=[
+ ['fuse.correlate','sar:0142 ⊕ rf:0967','constr','allow-with-constraints'],
+ ['agent.tool_call','crm.update <i>· agent-ops-3</i>','allow','allow'],
+ ['data.release','dataset:4471 → enclave-2','constr','allow-with-constraints'],
+ ['data.merge','tracks:44 ⊕ imagery:12','allow','allow'],
+ ['model.deploy','ranker v3.2 → prod','esc','escalate'],
+ ['record.export','bundle → reviewer','allow','allow'],
+ ['fuse.transform','degrade res 0.5×','constr','allow-with-constraints'],
+ ['agent.email_send','external · unverified list','deny','deny'],
+ ['policy.activate','pb-2026.07.2','esc','escalate'],
+ ['infra.actuate','valve-7 · pressure adj','hold','hold'],
+ ['data.ingest','ads-b feed · label bind ✓','allow','allow'],
+ ['label.rebind','sig mismatch obj:0311','deny','deny → segregate']
+];
+const stream=document.getElementById('stream');
+let i=0,n=1093;
+function row(){
+  const [op,det,cls,txt]=ops[i++%ops.length];
+  const el=document.createElement('div');el.className='crow';
+  el.innerHTML=`<span class="id">01J9…${(n++).toString().padStart(4,'0')}</span><span class="op">${op} <i>${det}</i></span><span class="vc ${cls}">${txt}</span><span class="pr"><b>PROA</b><span class="lk">⇄</span><b class="pend">PROOD</b></span>`;
+  stream.prepend(el);
+  setTimeout(()=>{const p=el.querySelector('.pend');if(p)p.classList.remove('pend')},900+Math.random()*900);
+  while(stream.children.length>8)stream.removeChild(stream.lastChild);
+}
+for(let k=0;k<7;k++)row();
+setInterval(row,1500);
+</script>
+</body>
+</html>

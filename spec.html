@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ActionSpecs Protocol | Public Working Draft | Adekka</title>
+<meta name="description" content="ActionSpecs Protocol Public Working Draft v1.0-draft: an open protocol architecture for authorizing, enforcing, and evidencing consequential operations by automated systems.">
+<link rel="icon" type="image/svg+xml" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="%2339594D"/><rect x="14" y="13" width="36" height="15" rx="4" fill="%23FAF6F0"/><rect x="14" y="36" width="36" height="15" rx="4" fill="%23A9C1B4"/><rect x="30" y="28" width="4" height="8" fill="%23A9C1B4"/></svg>'>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#FAF6F0;--cream2:#F3EDE3;--sand:#E9E0D1;--ink:#212121;--grey:#5E5C58;--pine:#39594D;--sage:#A9C1B4;--sage-soft:#DCE7E0;
+--sans:'Instrument Sans',system-ui,sans-serif;--mono:'Geist Mono',ui-monospace,monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased}
+::selection{background:var(--pine);color:#fff}
+a{color:inherit}
+nav{position:sticky;top:0;z-index:100;background:color-mix(in srgb,var(--cream) 90%,transparent);backdrop-filter:blur(16px);border-bottom:1px solid var(--sand)}
+.navin{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;height:66px;gap:28px}
+.logo{font-weight:700;font-size:21px;letter-spacing:-.035em;text-decoration:none}
+.logo::after{content:".";color:var(--pine)}
+.navin .r{margin-left:auto;display:flex;gap:24px;align-items:center;font-size:14.5px}
+.navin .r a{color:var(--grey);text-decoration:none;font-weight:500}
+.navin .r a:hover{color:var(--ink)}
+.canon{background:var(--sage-soft);border-bottom:1px solid var(--sand);font-family:var(--mono);font-size:12px;color:var(--pine);text-align:center;padding:9px 16px}
+.canon a{color:var(--pine)}
+.layout{max-width:1200px;margin:0 auto;padding:48px 24px 96px;display:grid;grid-template-columns:250px 1fr;gap:64px}
+@media(max-width:900px){.layout{grid-template-columns:1fr;gap:24px}}
+.toc{position:sticky;top:96px;align-self:start;font-size:13.5px}
+@media(max-width:900px){.toc{position:static;border-bottom:1px solid var(--sand);padding-bottom:18px}}
+.toc .tl{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey);margin-bottom:14px}
+.toc a{display:block;color:var(--grey);text-decoration:none;padding:5px 0 5px 12px;border-left:2px solid var(--sand)}
+.toc a:hover{color:var(--ink);border-left-color:var(--pine)}
+main{max-width:760px;min-width:0}
+.spectitle{font-size:clamp(30px,4vw,44px);line-height:1.1;letter-spacing:-.025em;margin-bottom:22px}
+main h2{font-size:26px;letter-spacing:-.02em;margin:52px 0 16px;scroll-margin-top:96px}
+main h3{font-size:18.5px;margin:34px 0 12px}
+main p{margin:0 0 16px;color:#3A3A38}
+main hr{border:none;border-top:1px solid var(--sand);margin:40px 0}
+main ul,main ol{margin:0 0 16px 22px;color:#3A3A38}
+main li{margin:6px 0}
+blockquote{border-left:3px solid var(--pine);background:var(--sage-soft);padding:16px 22px;border-radius:0 10px 10px 0;font-weight:500;margin:22px 0;font-size:17px}
+code{font-family:var(--mono);font-size:.85em;background:var(--cream2);border:1px solid var(--sand);border-radius:5px;padding:1px 6px}
+.codeblk{font-family:var(--mono);font-size:12.5px;line-height:1.7;background:#131A17;color:#C2CFC8;border-radius:12px;padding:20px 22px;overflow-x:auto;margin:22px 0}
+table{width:100%;border-collapse:collapse;margin:22px 0;font-size:14px;display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+th{text-align:left;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);border-bottom:1.5px solid var(--sand);padding:10px 12px}
+td{border-bottom:1px solid var(--sand);padding:11px 12px;vertical-align:top;color:#3A3A38}
+footer{border-top:1px solid var(--sand);padding:36px 24px;text-align:center;font-size:13.5px;color:var(--grey)}
+footer a{color:var(--grey)}
+@media(max-width:640px){.navin .r a:last-child{display:none}.navin .r{gap:16px}}
+</style>
+</head>
+<body>
+<nav><div class="navin">
+  <a class="logo" href="index.html">adekka</a>
+  <div class="r"><a href="index.html">Home</a><a href="https://github.com/adekka-canada/actionspecs">View on GitHub ↗</a></div>
+</div></nav>
+<div class="canon">Rendered from the public working draft · canonical source: <a href="https://github.com/adekka-canada/actionspecs">github.com/adekka-canada/actionspecs</a></div>
+<div class="layout">
+  <aside class="toc"><div class="tl">Contents</div><a href="#s1">Abstract</a>
+<a href="#s2">1. Motivation</a>
+<a href="#s3">2. Terminology</a>
+<a href="#s4">3. Architectural Principles</a>
+<a href="#s5">4. The Nine-Stage Lifecycle</a>
+<a href="#s6">5. The ActionSpec</a>
+<a href="#s7">6. Verdicts</a>
+<a href="#s8">7. The Policy Model</a>
+<a href="#s9">8. The Evidentiary Chain</a>
+<a href="#s10">9. Override Governance</a>
+<a href="#s11">10. Security Considerations</a>
+<a href="#s12">11. Application Profiles</a>
+<a href="#s13">12. Conformance</a></aside>
+  <main><h1 class="spectitle">ActionSpecs Protocol Specification</h1>
+<p><b>Version:</b> 1.0-draft</p>
+<p><b>Author:</b> Adekka Canada Inc., Toronto, Canada</p>
+<p><b>Publisher:</b> Adekka Canada Inc.</p>
+<p><b>Status:</b> Draft for publication</p>
+<p><b>License:</b> This specification is licensed under Creative Commons Attribution 4.0 International (CC BY 4.0). Anyone may implement this protocol. Attribution to Adekka Canada Inc. is required when reproducing or adapting this document.</p>
+<p><b>Copyright:</b> © 2026 Adekka Canada Inc. Licensed under CC BY 4.0.</p>
+<hr>
+<h2 id="s1">Abstract</h2>
+<p>ActionSpecs is a protocol for governing consequential operations performed by or through automated systems. It defines a nine-stage lifecycle under which every governed operation is declared in a machine-readable form (an <em>ActionSpec</em>), evaluated against versioned machine-readable policy, issued an explicit verdict before execution, and bound to a cryptographically linked pair of evidentiary records: one proving what was authorized, one proving what occurred.</p>
+<p>The protocol rests on a single invariant:</p>
+<blockquote><b>A consequential operation must not occur without a policy verdict, and no verdict or outcome may exist without a receipt.</b></blockquote>
+<p>ActionSpecs is domain-agnostic. It applies wherever automated operations require authorization, enforcement, and evidence: autonomous AI-agent actions, multi-sensor data fusion, financial transaction execution, infrastructure control, and other regulated or high-consequence domains. Domain bindings are defined in application profiles (Section 11).</p>
+<h2 id="s2">1. Motivation</h2>
+<p>Automated systems increasingly perform operations whose consequences are significant: moving money, merging classified data, actuating physical systems, executing decisions at machine speed. Existing authorization mechanisms answer only the question <em>"may this occur?"</em>: they issue a decision and retain no binding between that decision and what subsequently executed. The gap between <em>what was authorized</em> and <em>what actually occurred</em> is therefore invisible, and that gap is precisely where compliance failures, security compromises, and liability disputes live.</p>
+<p>ActionSpecs closes that gap structurally. It treats authorization not as a point-in-time answer but as a lifecycle: declaration, validation, verdict, constrained execution, verification, and evidence. The result is a system in which every governed operation carries a complete, tamper-evident, independently verifiable account of its authorization and its outcome.</p>
+<h2 id="s3">2. Terminology</h2>
+<p>The key words MUST, MUST NOT, REQUIRED, SHALL, SHOULD, and MAY in this document are to be interpreted as described in RFC 2119.</p>
+<ul><li><b>Action</b>: a consequential operation subject to governance.</li><li><b>ActionSpec</b>: the machine-readable declaration of a proposed Action (Section 5).</li><li><b>Principal</b>: the identified entity (human, service, agent, or pipeline stage) requesting an Action.</li><li><b>Policy Bundle</b>: a versioned, signed set of machine-readable policy documents (Section 7).</li><li><b>Verdict</b>: the explicit decision issued for an ActionSpec (Section 6).</li><li><b>PDP (Policy Decision Point)</b>: the component that evaluates ActionSpecs against active policy and issues Verdicts.</li><li><b>Enforcement Executor</b>: the component that applies verdict constraints by performing required transformations itself, rather than instructing the governed workload to do so.</li><li><b>PROA (Proof of Authorization)</b>: the evidentiary record issued at verdict time (Section 8.1).</li><li><b>PROOD (Proof of Operation and Delivery)</b>: the evidentiary record issued after execution (Section 8.2).</li><li><b>Receipt Ledger</b>: the append-only, hash-linked store of PROAs and PROODs (Section 8.3).</li><li><b>Governed Workload</b>: the system performing the Action (e.g., an AI agent, a fusion engine). The Governed Workload is outside the trust boundary.</li></ul>
+<h2 id="s4">3. Architectural Principles</h2>
+<ol><li><b>Governance is the substrate.</b> The authorization layer is not a feature of the workload; the workload runs on top of the authorization layer. No pathway to execution exists that bypasses the PDP.</li><li><b>The workload is untrusted.</b> Enforcement never depends on the governed workload's cooperation. Constraints are applied by the Enforcement Executor before the workload receives data or effects.</li><li><b>Explicit outcomes only.</b> Every ActionSpec receives an explicit Verdict or an explicit refusal. There is no silent-failure or best-effort path.</li><li><b>Evidence by construction.</b> Receipts are generated as an inseparable part of the decision and execution flow, not as an optional logging layer.</li><li><b>Deterministic decisions and explanations.</b> Verdict evaluation and rationale generation are deterministic. Probabilistic components (including language models) MUST NOT appear in the decision or explanation path. AI components MAY operate in advisory roles (anomaly flagging, classification suggestion); their outputs are inputs to policy, never decisions.</li><li><b>Governance of the governor.</b> Changes to policy are themselves governed Actions: proposed as ActionSpecs, verdicted, and receipted.</li><li><b>Proportionate response.</b> A single anomalous object or failed verification affects only that object (deny/segregate). System-wide restrictive states are entered only on policy-defined compromise patterns, so the governance layer cannot be weaponized as a denial-of-service vector.</li></ol>
+<h2 id="s5">4. The Nine-Stage Lifecycle</h2>
+<p>Every governed Action proceeds through the following stages. Stages 1-5 are the authorization path; stages 6-9 are the accountability path.</p>
+<table><tr><th>#</th><th>Stage</th><th>Function</th></tr><tr><td>1</td><td><b>Intent</b></td><td>A Principal expresses the need for an Action. Intent capture binds the Action to an identified, authenticated Principal.</td></tr><tr><td>2</td><td><b>Specification</b></td><td>The intent is rendered as an ActionSpec: a complete machine-readable declaration of inputs, operation, context, and proposed outputs.</td></tr><tr><td>3</td><td><b>Validation</b></td><td>The ActionSpec is checked for well-formedness, schema conformance, label/binding integrity of referenced inputs, and internal consistency. Malformed or tampered inputs are rejected here.</td></tr><tr><td>4</td><td><b>Approval / Governance</b></td><td>The PDP evaluates the validated ActionSpec against the active Policy Bundle and issues a Verdict. The <b>PROA is issued at this stage.</b> Predefined policy conditions resolve automatically at machine speed; only genuine policy-boundary cases route to a human authority via the escalate verdict.</td></tr><tr><td>5</td><td><b>Execution</b></td><td>For permissive verdicts, the Enforcement Executor applies any constraints (transformations, redactions, restrictions) and releases the operation to the Governed Workload.</td></tr><tr><td>6</td><td><b>Monitoring & Control</b></td><td>The executing operation is observed against its authorized envelope (duration, resources, scope). Out-of-envelope behavior triggers policy-defined control responses.</td></tr><tr><td>7</td><td><b>Verification</b></td><td>The operation's actual inputs, transformations, and outputs are captured and checked against what the PROA authorized.</td></tr><tr><td>8</td><td><b>Audit & Traceability</b></td><td>The <b>PROOD is issued at this stage</b>, cryptographically linked to the PROA. Both are committed to the Receipt Ledger. Lineage becomes queryable.</td></tr><tr><td>9</td><td><b>Learning</b></td><td>Receipted outcomes inform policy refinement. Proposed policy changes re-enter the lifecycle at Stage 1 as governed Actions in their own right.</td></tr></table>
+<h2 id="s6">5. The ActionSpec</h2>
+<p>An ActionSpec is a structured document declaring a proposed Action. It MUST contain:</p>
+<ul><li><code>action_id</code>, a globally unique identifier, generated at Specification and carried through every subsequent record.</li><li><code>principal</code>, the authenticated identity of the requester.</li><li><code>operation</code>, the operation type, drawn from a profile-defined vocabulary.</li><li><code>inputs</code>, references to input objects, each with integrity digests and any confidentiality labels or bindings.</li><li><code>proposed_output</code>, the declared output characteristics (including any proposed output labels, destinations, or effects).</li><li><code>context</code>, execution context: node, environment, mission/tenancy identifiers, timestamp.</li><li><code>policy_scope</code>, the policy domain(s) under which evaluation is requested.</li></ul>
+<p>Illustrative structure (JSON shown; the protocol is serialization-agnostic):</p>
+<pre class="codeblk">{
+  "action_id": "01J9ZK3W7Q4R8V2N6P0XA5HD3M",
+  "principal": { "id": "pipeline-stage-7", "type": "service", "auth": "..." },
+  "operation": "correlate",
+  "inputs": [
+    { "ref": "obj:sar:0142", "digest": "sha256:...", "label": { "..." : "..." }, "binding": "..." },
+    { "ref": "obj:rf:0967",  "digest": "sha256:...", "label": { "..." : "..." }, "binding": "..." }
+  ],
+  "proposed_output": { "label": { "...": "..." }, "destination": "cop-feed-2" },
+  "context": { "node": "edge-04", "env": "offline", "ts": "2026-07-07T14:00:00Z" },
+  "policy_scope": ["fusion-compliance"]
+}</pre>
+<h2 id="s7">6. Verdicts</h2>
+<p>The PDP issues exactly one of six verdict types for every evaluated ActionSpec:</p>
+<table><tr><th>Verdict</th><th>Semantics</th></tr><tr><td><b>allow</b></td><td>The Action proceeds as specified.</td></tr><tr><td><b>allow-with-constraints</b></td><td>The Action proceeds only after the Enforcement Executor applies policy-mandated transformations (e.g., field redaction, resolution degradation, sanitization, output-label conditions). Constraints are executable specifications, not advisory annotations.</td></tr><tr><td><b>hold</b></td><td>The Action is queued pending a policy-defined condition (time-based release, pending authority, quota window). Holds are receipted and expire per policy.</td></tr><tr><td><b>escalate</b></td><td>The Action routes to a named human authority for decision. The escalation, the authority's decision, and its rationale are receipted.</td></tr><tr><td><b>deny</b></td><td>The Action is refused. Where the profile defines segregation, input objects MAY be routed to an isolated quarantine store, segregated, never silently dropped.</td></tr><tr><td><b>emergency-restrict</b></td><td>A system-wide clamp: all verdicts collapse to the most restrictive posture until cleared by a designated authority. Entered ONLY on policy-defined compromise patterns (e.g., verification-failure-rate thresholds, correlated tamper indicators), never on a single anomalous event (Principle 7).</td></tr></table>
+<p>Every verdict MUST carry a deterministic, human-readable rationale identifying the policy clause that fired, the triggering condition, and any constraint applied. Rationales are generated by mapping the fired policy predicate to template text; no probabilistic generation is permitted in the rationale path. Rationales MUST additionally be emitted in machine-readable form (the fired policy clause identifier, triggering condition, and policy bundle version as structured fields alongside the rendered text) so downstream systems can consume verdict reasoning programmatically.</p>
+<h2 id="s8">7. The Policy Model</h2>
+<ul><li><b>Policy-as-code.</b> Policies are machine-readable documents: constraint predicates, decision rules, escalation routes, and disposition logic. They are data, not software; a rule change is a document change, never a code release.</li><li><b>Versioned and signed.</b> Every Policy Bundle carries a version identifier and a digital signature. Every Verdict and PROA records the exact bundle version under which it was decided.</li><li><b>Hot reload.</b> Bundle activation is an atomic swap. No restart is required and no enforcement gap occurs during transition. In-flight ActionSpecs complete under the version they were verdicted against, preserving audit coherence.</li><li><b>Compiled evaluation.</b> Implementations SHOULD compile policy bundles at load time into optimized decision structures such that evaluation is lookup-dominated. Implementations MAY cache verdicts on repeated (input-class × label × operation × principal) tuples where policy semantics permit.</li><li><b>Governed policy change.</b> A proposed policy change is an ActionSpec (default route: escalate to a designated policy authority). The change, its approval, and its activation are receipted. The audit chain therefore covers the evolution of the rules themselves.</li><li><b>Ordered constraint domains.</b> Where a profile defines ordered sensitivity structures (e.g., classification lattices), policy evaluation MUST use the profile's formal ordering. Content transformations that legitimately change an object's true sensitivity are permissible under allow-with-constraints; lowering a label to satisfy an operation is prohibited. <em>The data changes to satisfy the label; the label is never lowered to satisfy the operation.</em></li></ul>
+<h2 id="s9">8. The Evidentiary Chain</h2>
+<h3>8.1 PROA. Proof of Authorization</h3>
+<p><em>(Informally: the authorization receipt.)</em></p>
+<p>Issued at Stage 4, at verdict time. (Informally: the <em>authorization receipt</em>.) The PROA MUST record: the full ActionSpec (or its digest), the verdict and any constraints, the deterministic rationale, the exact policy bundle version, the deciding principal (PDP instance or human authority), and a timestamp. <b>The PROA proves what was authorized.</b></p>
+<h3>8.2 PROOD. Proof of Operation and Delivery</h3>
+<p><em>(Informally: the execution receipt.)</em></p>
+<p>Issued at Stage 8, after execution and verification. The PROOD MUST record: the <code>action_id</code> linking it to its PROA, digests of actual inputs consumed and outputs produced, output labels or effects as delivered, enforcement transformations actually applied, execution context and timing, and the verification result (conformant / divergent, with divergence detail). <b>The PROOD proves what occurred.</b></p>
+<h3>8.3 The Receipt Ledger</h3>
+<p>PROAs and PROODs are committed to an append-only ledger in which each record is hash-linked to its predecessors. Structurally, the ledger forms a directed acyclic graph of the governed data/action lifecycle: any output object is a node whose edges trace back through receipted operations to original inputs.</p>
+<p>Properties the ledger MUST provide:</p>
+<ol><li><b>Tamper evidence.</b> Retroactive fabrication or modification of any record breaks the hash links detectably.</li><li><b>Lineage query.</b> Any governed output can be traced through every operation to its origins.</li><li><b>Self-verifying export.</b> An evidence bundle (receipts + policy versions + hash proofs) can be exported and independently verified by a party with no access to, and no trust in, the live system or its operator.</li></ol>
+<p>The divergence between PROA and PROOD is a first-class, inspectable artifact. Implementations MUST surface PROA/PROOD divergence as a policy-relevant event.</p>
+<p>The ledger is an append-only, hash-linked record store; no distributed consensus or blockchain infrastructure is required or implied. Evidence-bundle exports SHOULD be compatible with external transparency infrastructures (e.g., IETF SCITT-style transparency logs), so that receipts can additionally be anchored to, and verified against, logs outside the operating organization's control.</p>
+<h3>8.4 Latency posture</h3>
+<p>The synchronous hot path carries only verdict evaluation and PROA issuance. PROOD persistence and ledger commitment MAY be asynchronous, provided ordering and linkage guarantees are preserved. Evidentiary completeness must not tax operational latency.</p>
+<h2 id="s10">9. Override Governance</h2>
+<p>Human override of a verdict is permitted and is itself a governed Action:</p>
+<ul><li>An override is expressed as an ActionSpec requiring an authenticated identity and a stated justification.</li><li>The override receives its own verdict (per policy: typically allow with mandatory receipting, or escalate to higher authority) and its own PROA/PROOD pair.</li><li>The original verdict, the override, and the justification are permanently linked in the ledger.</li></ul>
+<p><b>Override is always possible; anonymous or unrecorded override is architecturally impossible.</b> Accountability is achieved by construction, not by procedure.</p>
+<h2 id="s11">10. Security Considerations</h2>
+<ul><li><b>Integrity of inputs.</b> Where inputs carry confidentiality labels or bindings, verification occurs at every hand-off (Stage 3 and Stage 5). A failed verification verdicts that object deny/segregate.</li><li><b>Proportionality.</b> Per Principle 7, single-object failures MUST NOT trigger system-wide restriction. Emergency-restrict thresholds are policy-defined and receipted when crossed.</li><li><b>Signature primitives.</b> Policy bundle signatures and label bindings SHOULD use asymmetric digital signatures, providing non-repudiable, multi-party-verifiable provenance. Symmetric MACs are NOT RECOMMENDED for cross-party evidence.</li><li><b>Trust boundary.</b> The Governed Workload, including any AI models within it, is outside the trust boundary. Compromise of the workload cannot forge receipts, alter policy, or cause unauthorized operations to be recorded as authorized.</li><li><b>Ledger custody.</b> Because export bundles are self-verifying, long-term evidentiary value survives even if the operating organization or its infrastructure is not trusted at review time.</li></ul>
+<h2 id="s12">11. Application Profiles</h2>
+<p>The core protocol is domain-agnostic. An application profile binds it to a domain by defining: the operation vocabulary, input object types and label schemas, the constraint-domain ordering (if any), disposition mappings, and escalation authorities. Profiles anticipated by the author include:</p>
+<ul><li><b>Agent Action Authorization</b>: governing actions proposed by autonomous AI agents (tool calls, transactions, communications, system changes).</li><li><b>Sensor Fusion Compliance</b>: governing multi-sensor, multi-domain data fusion operations, with confidentiality labels per NATO STANAG 4774, cryptographic binding per STANAG 4778, a classification lattice as the constraint-domain ordering, and disposition mapping {permit → allow; restrict/downgrade → allow-with-constraints; segregate → deny-with-quarantine}.</li></ul>
+<p>Profile specifications are published separately from this core document.</p>
+<h2 id="s13">12. Conformance</h2>
+<p>An implementation is conformant with this specification if:</p>
+<ol><li>No governed operation can execute without a Verdict (Principle 1, Stage 4).</li><li>All six verdict types are supported with the semantics of Section 6.</li><li>Every verdict yields a PROA and every executed operation yields a linked PROOD (Section 8).</li><li>The ledger provides tamper evidence, lineage query, and self-verifying export (Section 8.3).</li><li>Verdict and rationale paths are deterministic (Principle 5).</li><li>Policy is versioned, signed, hot-reloadable, and its changes are themselves governed (Section 7).</li><li>Override conforms to Section 9.</li><li>Response proportionality conforms to Principle 7.</li></ol>
+<p>Conformance test criteria derivable from this specification will be published as a companion document.</p>
+<hr>
+<p><em>ActionSpecs Protocol Specification v1.0-draft. Adekka Canada Inc., Toronto, Canada.</em></p>
+<p><em>Contact: info@adekka.com</em></p></main>
+</div>
+<footer>© 2026 Adekka Canada Inc. · The ActionSpecs Protocol is published under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></footer>
+</body>
+</html>

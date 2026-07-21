@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The hard questions about autonomous action. Adekka</title>
+<meta name="description" content="How Adekka's public ActionSpecs protocol draft, NUBAS platform architecture, and commitments address authorization, evidence, accountability, override, and remediation in autonomous systems.">
+<link rel="icon" type="image/svg+xml" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="%2339594D"/><rect x="14" y="13" width="36" height="15" rx="4" fill="%23FAF6F0"/><rect x="14" y="36" width="36" height="15" rx="4" fill="%23A9C1B4"/><rect x="30" y="28" width="4" height="8" fill="%23A9C1B4"/></svg>'>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#FAF6F0;--cream2:#F3EDE3;--sand:#E9E0D1;--ink:#212121;--grey:#5E5C58;--pine:#39594D;--sage:#A9C1B4;--sage-soft:#DCE7E0;--rust:#9C5E52;
+--sans:'Instrument Sans',system-ui,sans-serif;--serif:'Newsreader',Georgia,serif;--mono:'Geist Mono',ui-monospace,monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);font-size:17px;line-height:1.75;-webkit-font-smoothing:antialiased}
+::selection{background:var(--pine);color:#fff}
+a{color:inherit}
+nav{position:sticky;top:0;z-index:100;background:color-mix(in srgb,var(--cream) 90%,transparent);backdrop-filter:blur(16px);border-bottom:1px solid var(--sand)}
+.navin{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;height:66px}
+.logo{font-weight:700;font-size:21px;letter-spacing:-.035em;text-decoration:none}
+.logo::after{content:".";color:var(--pine)}
+.navin .r{margin-left:auto;display:flex;gap:24px;font-size:14.5px}
+.navin .r a{color:var(--grey);text-decoration:none;font-weight:500}
+.navin .r a:hover{color:var(--ink)}
+.hero{max-width:820px;margin:0 auto;padding:96px 24px 64px}
+.label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey)}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(38px,5.5vw,60px);line-height:1.08;letter-spacing:-.02em;margin:18px 0 26px}
+.lede{font-size:clamp(18px,1.8vw,21px);color:var(--grey);line-height:1.65}
+article{max-width:820px;margin:0 auto;padding:0 24px 80px}
+.q{border-top:1px solid var(--sand);padding:64px 0}
+.q .num{font-family:var(--mono);font-size:12px;color:var(--pine);letter-spacing:.1em}
+.q h2{font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.4vw,36px);line-height:1.2;letter-spacing:-.015em;margin:12px 0 22px}
+.q p{color:#3A3A38;margin-bottom:18px}
+.q p b{font-weight:600;color:var(--ink)}
+.answer{background:#fff;border-radius:14px;box-shadow:0 1px 1px rgba(33,33,33,.05),0 2px 6px rgba(33,33,33,.04),0 12px 28px rgba(33,33,33,.06);padding:28px 30px;margin:26px 0 0}
+.answer .al{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--pine);margin-bottom:12px}
+.answer p{margin-bottom:14px}
+.answer p:last-of-type{margin-bottom:0}
+.status{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--sand);border-radius:100px;padding:4px 12px;color:var(--grey);margin-top:18px}
+.status.pub{color:var(--pine);border-color:var(--sage)}
+blockquote{font-family:var(--serif);font-style:italic;font-size:clamp(21px,2.6vw,27px);line-height:1.45;border-left:3px solid var(--pine);padding:6px 0 6px 26px;margin:34px 0;color:var(--ink)}
+blockquote em{color:var(--pine);font-style:italic}
+.closing{border-top:1px solid var(--sand);padding:64px 0 0}
+.closing h2{font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.4vw,36px);letter-spacing:-.015em;margin-bottom:22px}
+.closing p{color:#3A3A38;margin-bottom:18px}
+.ctarow{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
+.pill{display:inline-flex;align-items:center;gap:8px;font-weight:500;font-size:15px;padding:13px 26px;border-radius:100px;text-decoration:none;transition:all .18s;border:1.5px solid transparent}
+.pill::after{content:"→";transition:transform .18s}
+.pill:hover::after{transform:translateX(4px)}
+.pill.dark{background:var(--ink);color:#fff}
+.pill.dark:hover{background:var(--pine)}
+.pill.line{border-color:var(--ink);color:var(--ink)}
+.pill.line:hover{background:var(--ink);color:#fff}
+@media(max-width:640px){.navin .r a:last-child{display:none}.navin .r{gap:16px}}
+footer{border-top:1px solid var(--sand);padding:36px 24px;text-align:center;font-size:13.5px;color:var(--grey)}
+footer a{color:var(--grey)}
+</style>
+</head>
+<body>
+<nav><div class="navin">
+  <a class="logo" href="index.html">adekka</a>
+  <div class="r"><a href="index.html">Home</a><a href="spec.html">Protocol draft</a><a href="https://github.com/adekka-canada/actionspecs">GitHub ↗</a></div>
+</div></nav>
+
+<header class="hero">
+  <span class="label">Our position</span>
+  <h1>The hard questions about autonomous action</h1>
+  <p class="lede">Automated systems increasingly take actions with real consequences, at machine speed, at scale, and often without a human in the moment. We think a small set of hard questions decides whether that world is trustworthy. This page states the questions plainly and shows how our work answers them, with honest labels on what is published, what is being built, and what is still ahead.</p>
+</header>
+
+<article>
+
+<div class="q">
+  <div class="num">Question 01</div>
+  <h2>Who decided this action could happen?</h2>
+  <p>When a human acts, someone authorized it: a manager approved, a policy permitted, a law allowed. When software acts, the answer is often nobody in particular: a configuration permitted a class of behavior months ago, under assumptions nobody recorded, against rules nobody versioned. The decision dissolves into the system.</p>
+  <p>We think consequential automation deserves the same standard as consequential human action: <b>an explicit decision, by an identifiable authority, against rules in force at that moment.</b></p>
+  <div class="answer">
+    <div class="al">Our answer</div>
+    <p>The ActionSpecs Protocol requires every governed operation to be declared before execution and evaluated against versioned, signed policy, producing one of six explicit verdicts. The verdict names the policy version and the clause that fired. Under a conforming implementation, a governed operation must receive an explicit verdict before execution; an operation without a verdict must not proceed.</p>
+    <span class="status pub">Published draft · protocol §4 to §7</span>
+  </div>
+</div>
+
+<div class="q">
+  <div class="num">Question 02</div>
+  <h2>Can anyone prove what actually happened?</h2>
+  <p>Most systems can show you a log. Logs are written by the system being questioned, kept by the operator being audited, and reconcilable with the original authorization only through effort and trust. When the stakes are real (a security incident, a regulatory inquiry, a dispute), "our logs show" is an assertion, not a proof.</p>
+  <blockquote>A consequential operation must not occur without a policy verdict, and no verdict or outcome may exist <em>without a receipt.</em></blockquote>
+  <div class="answer">
+    <div class="al">Our answer</div>
+    <p>The protocol pairs every operation with two cryptographically linked records: a Proof of Authorization at verdict time, and a Proof of Operation and Delivery after execution, committed to an append-only, hash-linked ledger. Under a conforming implementation, the difference between the recorded authorization and the captured operation becomes an explicit, inspectable artifact rather than something reconstructed solely from separate logs.</p>
+    <p>The evidence-bundle design is intended to support verification by reviewers with no access to, and no trust in, the operator or the live system.</p>
+    <span class="status pub">Published draft · protocol §8 · verifier tooling in development</span>
+  </div>
+</div>
+
+<div class="q">
+  <div class="num">Question 03</div>
+  <h2>Who governs the rules themselves?</h2>
+  <p>Every governance system faces the same recursion: the rules constrain the system, but who constrains changes to the rules? If policy can be edited quietly, whether by an administrator, an attacker, or the operator under pressure, then every downstream guarantee inherits that weakness. Most compliance regimes answer this with procedure. Procedure is exactly what fails under pressure.</p>
+  <div class="answer">
+    <div class="al">Our answer</div>
+    <p>In ActionSpecs, changing the rules is itself a governed action: proposed as a declaration, verdicted, signed, and receipted like any other operation. The audit chain therefore covers not only what the system did, but the entire history of the rules it did it under. We call this governance of the governor, and we consider it non-negotiable.</p>
+    <span class="status pub">Published draft · protocol §7</span>
+  </div>
+</div>
+
+<div class="q">
+  <div class="num">Question 04</div>
+  <h2>Can a human still intervene, and is the intervention accountable?</h2>
+  <p>Two failure modes bracket this question. In one, automation cannot be overridden, and humans watch helplessly as a system does the wrong thing correctly. In the other, override is easy and anonymous, and accountability evaporates precisely when it matters most. Most systems pick a side. We think the choice is false.</p>
+  <div class="answer">
+    <div class="al">Our answer</div>
+    <p>The protocol treats override as a first-class governed action. A conforming override must be attributed to an authenticated actor, include a stated justification, receive a verdict under the applicable policy, and generate linked evidence permanently associated with the decision it overrides. Intervention is preserved; unattributed override is non-conforming. Accountability by construction, not by procedure.</p>
+    <span class="status pub">Published draft · protocol §9</span>
+  </div>
+</div>
+
+<div class="q">
+  <div class="num">Question 05</div>
+  <h2>When something goes wrong, can it be found, and undone?</h2>
+  <p>Incidents happen: a compromised credential, poisoned data, a bad deployment. Today's honest answer to "what did it touch?" is weeks of forensics with no completeness guarantee, and the answer to "was it fixed?" is a statement of belief. We think remediation should be as provable as the original act, including honesty about what cannot be reversed.</p>
+  <div class="answer">
+    <div class="al">Our answer</div>
+    <p>Because every governed operation is receipted and linked, the record forms a graph: walked backward, it supports audit and provenance; walked forward from a tainted operation, it is intended to identify affected downstream operations represented in the governed lineage record. Our roadmap extends the protocol so that each remediation step is itself a governed, receipted action, with operations honestly classified by reversibility, what was undone, what was contained, and what could not be reversed.</p>
+    <span class="status">Roadmap · future protocol version</span>
+  </div>
+</div>
+
+<div class="q">
+  <div class="num">Question 06</div>
+  <h2>Why should anyone trust the company building this?</h2>
+  <p>A fair question, trust infrastructure from an opaque vendor is a contradiction. Our answer is structural rather than rhetorical, and it comes in three commitments we have already begun keeping.</p>
+  <div class="answer">
+    <div class="al">Our commitments</div>
+    <p><b>The foundation is open.</b> The ActionSpecs Protocol is published under CC BY 4.0 with defined conformance requirements. Anyone may inspect it, implement it independently, and evaluate NUBAS against it. We chose to publish the protocol draft before shipping the platform, so our implementation can be evaluated against public requirements.</p>
+    <p><b>The authoritative decision path is deterministic.</b> No probabilistic model or language model determines a verdict. Policy evaluation and authoritative rationales must remain deterministic, reproducible, and attributable to the rules in force.</p>
+    <p><b>Published releases are not silently rewritten.</b> Protocol changes are introduced through versioned releases and documented changelogs. Built capabilities are described as built; intended capabilities remain labelled as intended. It is the same discipline this page practices.</p>
+    <span class="status pub">In effect · verifiable at github.com/adekka-canada</span>
+  </div>
+</div>
+
+<div class="closing">
+  <h2>Where this is going</h2>
+  <p>We do not think accountability is a feature to be added to automation later, the way security was bolted onto the early internet, at enormous and permanent cost. We think it is a property of architecture, decided at the foundation, and that the window to set that foundation is now, while autonomous systems are still earning their place in consequential roles.</p>
+  <p>Adekka's work is one bet on that view: formalize the architecture, publish it openly, build the reference platform, and let every claim be checked against the record. If we are right, the systems that act on our behalf will carry their own accountability with them, and trusting automation will stop being an act of faith.</p>
+  <div class="ctarow">
+    <a class="pill dark" href="spec.html">Read the working draft</a>
+    <a class="pill line" href="index.html">Explore the platform</a>
+  </div>
+</div>
+
+</article>
+
+<footer>© 2026 Adekka Canada Inc. · <a href="index.html">adekka.com</a> · The ActionSpecs Protocol is published under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></footer>
+</body>
+</html>
