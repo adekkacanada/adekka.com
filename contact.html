@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talk to us | Adekka</title>
+<meta name="description" content="Contact Adekka Canada Inc. We reply within two business days.">
+<link rel="icon" type="image/svg+xml" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="%2339594D"/><rect x="14" y="13" width="36" height="15" rx="4" fill="%23FAF6F0"/><rect x="14" y="36" width="36" height="15" rx="4" fill="%23A9C1B4"/><rect x="30" y="28" width="4" height="8" fill="%23A9C1B4"/></svg>'>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#FAF6F0;--cream2:#F3EDE3;--sand:#E9E0D1;--ink:#212121;--grey:#5E5C58;--pine:#39594D;--pine-deep:#26413A;--sage:#A9C1B4;--sage-soft:#DCE7E0;
+--sans:'Instrument Sans',system-ui,sans-serif;--mono:'Geist Mono',ui-monospace,monospace;--r:16px;
+--shadow:0 1px 1px rgba(33,33,33,.05),0 2px 6px rgba(33,33,33,.04),0 12px 28px rgba(33,33,33,.06)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--cream);color:var(--ink);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+::selection{background:var(--pine);color:#fff}
+a{color:inherit;text-decoration:none}
+a:focus-visible{outline:2px solid var(--pine);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+.label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey)}
+nav{position:sticky;top:0;z-index:100;background:color-mix(in srgb,var(--cream) 90%,transparent);backdrop-filter:blur(16px);border-bottom:1px solid var(--sand)}
+.navin{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;align-items:center;height:66px;gap:28px}
+.logo{font-weight:700;font-size:21px;letter-spacing:-.035em}
+.logo::after{content:".";color:var(--pine)}
+.navin .r{margin-left:auto;display:flex;gap:24px;align-items:center;font-size:14.5px}
+.navin .r a{color:var(--grey);font-weight:500}
+.navin .r a:hover{color:var(--ink)}
+.pagegrid{display:grid;grid-template-columns:1fr 1.15fr;gap:72px;padding:84px 0 96px;align-items:start}
+@media(max-width:880px){.pagegrid{grid-template-columns:1fr;gap:40px;padding:56px 0 72px}}
+.intro h1{font-size:clamp(36px,5vw,56px);line-height:1.05;letter-spacing:-.03em;font-weight:600;margin-top:14px}
+.intro .sub{font-size:clamp(16px,1.5vw,18px);color:var(--grey);max-width:26em;margin-top:16px}
+.meta{margin-top:40px;border-top:1px solid var(--sand);padding-top:22px;font-size:14.5px;color:var(--grey)}
+.meta p{margin:3px 0}
+.meta a{border-bottom:1px solid var(--sand)}
+.meta a:hover{color:var(--ink);border-color:var(--ink)}
+form{background:#fff;border-radius:var(--r);box-shadow:var(--shadow);padding:34px 32px}
+@media(max-width:520px){form{padding:26px 20px}}
+.field{margin-bottom:18px}
+.field label{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--grey);margin-bottom:7px}
+.field input,.field select,.field textarea{width:100%;font-family:var(--sans);font-size:15px;color:var(--ink);background:var(--cream);border:1.5px solid var(--sand);border-radius:10px;padding:12px 14px;transition:border-color .15s}
+.field textarea{min-height:130px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--pine)}
+.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235E5C58' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+button{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-weight:500;font-size:15.5px;padding:14px 30px;border-radius:100px;background:var(--pine);color:#fff;border:none;cursor:pointer;transition:background .18s}
+button::after{content:"→";transition:transform .18s}
+button:hover{background:var(--pine-deep)}
+button:hover::after{transform:translateX(4px)}
+button:disabled{opacity:.6;cursor:default}
+.formnote{font-size:13px;color:var(--grey);margin-top:14px}
+.done{display:none;background:var(--sage-soft);border:1px solid var(--sand);border-radius:var(--r);padding:34px 32px}
+.done h2{font-size:20px;margin-bottom:8px}
+.done p{font-size:14.5px;color:var(--grey)}
+.err{display:none;font-size:13.5px;color:#9C5E52;margin-top:12px}
+footer{border-top:1px solid var(--sand);padding:36px 24px;text-align:center;font-size:13.5px;color:var(--grey)}
+footer a{color:var(--grey);border-bottom:1px solid var(--sand)}
+footer a:hover{color:var(--ink)}
+</style>
+</head>
+<body>
+<nav><div class="navin">
+  <a class="logo" href="index.html">adekka</a>
+  <div class="r"><a href="index.html">Home</a><a href="index.html#platform">Platform</a><a href="spec.html">Protocol</a><a href="partners.html">Design partners</a></div>
+</div></nav>
+
+<div class="wrap"><div class="pagegrid">
+  <div class="intro">
+    <span class="label">Contact</span>
+    <h1>Talk to us.</h1>
+    <p class="sub">Every message is read by the founding team. We reply within two business days.</p>
+    <div class="meta">
+      <p>Adekka Canada Inc. · Toronto, Canada</p>
+      <p>Prefer email? <a href="mailto:info@adekka.com">info@adekka.com</a></p>
+      <p>Deploying consequential automation? <a href="partners.html">Apply as a design partner</a></p>
+    </div>
+  </div>
+
+  <div>
+    <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <input type="hidden" name="form" value="contact">
+      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+      <div class="field">
+        <label for="name">Name</label>
+        <input id="name" name="name" type="text" required autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" required autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="topic">Topic</label>
+        <select id="topic" name="topic">
+          <option>General</option>
+          <option>Public sector &amp; defence</option>
+          <option>ActionSpecs protocol</option>
+          <option>Media</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" required></textarea>
+      </div>
+      <button type="submit">Send message</button>
+      <p class="err" id="contactErr">Something went wrong sending your message. Please email <a href="mailto:info@adekka.com" style="border-bottom:1px solid currentColor">info@adekka.com</a> directly.</p>
+      <p class="formnote">Sent to the Adekka team. No newsletter, no follow-up sequence.</p>
+    </form>
+    <div class="done" id="contactDone">
+      <h2>Message sent.</h2>
+      <p>Thank you. You will hear from a person within two business days.</p>
+    </div>
+  </div>
+</div></div>
+
+<footer>© 2026 Adekka Canada Inc. · <a href="index.html">adekka.com</a> · <a href="mailto:info@adekka.com">info@adekka.com</a></footer>
+
+<script>
+const f=document.getElementById('contactForm');
+f.addEventListener('submit',async e=>{
+  e.preventDefault();
+  const btn=f.querySelector('button');btn.disabled=true;
+  try{
+    const r=await fetch(f.action,{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}});
+    if(r.ok){f.style.display='none';document.getElementById('contactDone').style.display='block';}
+    else throw 0;
+  }catch(_){document.getElementById('contactErr').style.display='block';btn.disabled=false;}
+});
+</script>
+</body>
+</html>
